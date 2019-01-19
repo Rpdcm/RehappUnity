@@ -7,7 +7,8 @@ public class Manager
 
     private static Manager instance;
     private string username;
-  
+    private string activityName;
+    
 
     public string Username
     {
@@ -19,6 +20,19 @@ public class Manager
         set
         {
             username = value;
+        }
+    }
+
+    public string ActivityName
+    {
+        get
+        {
+            return activityName;
+        }
+
+        set
+        {
+            activityName = value;
         }
     }
 

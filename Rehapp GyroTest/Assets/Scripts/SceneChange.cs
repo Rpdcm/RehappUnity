@@ -12,9 +12,10 @@ public class SceneChange : MonoBehaviour {
     private const string ACTIVITYSCREEN = "ActivityScreen";
     private const string PROFILESCREEN = "ProfileScreen";
     private const string PHYSIOTERAPISTSCREEN = "PhysioterapistScreen";
+    private const string CURRENTACTIVITYSCREEN = "CurrentActivityScreen";
 
     [SerializeField]
-    private TextMeshProUGUI username;
+    private TextMeshProUGUI textData;
 
     enum EnumChangeScene
     {
@@ -23,6 +24,7 @@ public class SceneChange : MonoBehaviour {
         ACTIVITYSCREEN,
         PROFILESCREEN,
         PHYSIOTERAPISTSCREEN,
+        CURRENTACTIVITYSCREEN,
 
     }
 
@@ -51,12 +53,22 @@ public class SceneChange : MonoBehaviour {
             case EnumChangeScene.PHYSIOTERAPISTSCREEN:
                 SceneManager.LoadScene(PHYSIOTERAPISTSCREEN);
                 break;
+
+            case EnumChangeScene.CURRENTACTIVITYSCREEN:
+                SceneManager.LoadScene(CURRENTACTIVITYSCREEN);
+                activityScreenData();
+                break;
         }
     }
 
     public void logIn()
     {
-        Manager.GetInstance().Username = username.text;
+        Manager.GetInstance().Username = textData.text;
         SceneManager.LoadScene(MAINSCREEN);
+    }
+
+    private void activityScreenData()
+    {
+        Manager.GetInstance().ActivityName = textData.text;
     }
 }

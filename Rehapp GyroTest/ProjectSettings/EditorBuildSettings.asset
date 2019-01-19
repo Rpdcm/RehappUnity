@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ProfileScreen.unity
     guid: 47cdfa5067aa586429a16385d3b794f8
+  - enabled: 1
+    path: Assets/Scenes/ActivityScreen.unity
+    guid: e249a8cd01ce7b64ab91fc7ad9a919e3
+  - enabled: 1
+    path: Assets/Scenes/CurrentActivityScreen.unity
+    guid: 4834a93d29b9d534a91c85368316e8c6
   m_configObjects: {}
