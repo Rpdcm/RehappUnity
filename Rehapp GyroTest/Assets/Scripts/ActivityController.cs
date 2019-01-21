@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class ActivityController : MonoBehaviour {
@@ -9,6 +10,13 @@ public class ActivityController : MonoBehaviour {
     private TextMeshProUGUI activityName;
     [SerializeField]
     private TextMeshProUGUI activityDescription;
+    [SerializeField]
+    private TextMeshProUGUI t_activityCompleted;
+    [SerializeField]
+    private Image calification;
+
+    
+
 
 	// Use this for initialization
 	void Start () {
@@ -19,4 +27,9 @@ public class ActivityController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void completeActivity()
+    {
+        
+    }
 }

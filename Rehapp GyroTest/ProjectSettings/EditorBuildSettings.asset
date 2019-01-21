@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CurrentActivityScreen.unity
     guid: 4834a93d29b9d534a91c85368316e8c6
+  - enabled: 1
+    path: Assets/Scenes/PhysioterapistScreen.unity
+    guid: 3ba1d731abefa964e8336b11284816f0
   m_configObjects: {}

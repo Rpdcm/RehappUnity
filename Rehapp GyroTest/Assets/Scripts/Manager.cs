@@ -8,7 +8,7 @@ public class Manager
     private static Manager instance;
     private string username;
     private string activityName;
-    
+    private List<Activity> activities = new List<Activity>();
 
     public string Username
     {
