@@ -9,6 +9,24 @@ public class Manager
     private string username;
     private string activityName;
     private List<Activity> activities = new List<Activity>();
+    public string userToken = " ";
+    public List<friendRequestSuccess> friendRequests = new List<friendRequestSuccess>();
+    public List<processRequestSuccess> processRequests = new List<processRequestSuccess>();
+    public List<therapistRequestSuccess> therapistRequests = new List<therapistRequestSuccess>();
+    public therapistRequestSuccess temporalTherapist;
+    public string notificationTitle;
+    public string notificationName;
+    public int notificationListNumber;
+
+    private string userId;
+    private string userAge;
+    private string userEmail;
+    private string email_verified_at;
+    private string user_role_id;
+    private bool hasFriendRequests = false;
+
+
+
 
     public string Username
     {
@@ -33,6 +51,84 @@ public class Manager
         set
         {
             activityName = value;
+        }
+    }
+
+    public string UserId
+    {
+        get
+        {
+            return userId;
+        }
+
+        set
+        {
+            userId = value;
+        }
+    }
+
+    public string UserAge
+    {
+        get
+        {
+            return userAge;
+        }
+
+        set
+        {
+            userAge = value;
+        }
+    }
+
+    public string UserEmail
+    {
+        get
+        {
+            return userEmail;
+        }
+
+        set
+        {
+            userEmail = value;
+        }
+    }
+
+    public string Email_verified_at
+    {
+        get
+        {
+            return email_verified_at;
+        }
+
+        set
+        {
+            email_verified_at = value;
+        }
+    }
+
+    public string User_role_id
+    {
+        get
+        {
+            return user_role_id;
+        }
+
+        set
+        {
+            user_role_id = value;
+        }
+    }
+
+    public bool HasFriendRequests
+    {
+        get
+        {
+            return hasFriendRequests;
+        }
+
+        set
+        {
+            hasFriendRequests = value;
         }
     }
 

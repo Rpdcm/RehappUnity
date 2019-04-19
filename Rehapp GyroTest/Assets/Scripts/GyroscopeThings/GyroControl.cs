@@ -7,6 +7,8 @@ public class GyroControl : MonoBehaviour {
     private bool gyroEnabled;
     private Gyroscope gyro;
     public GameObject noGyro;
+    [HideInInspector]
+    public bool hasGyro = false;
 
 	// Use this for initialization
 	void Start () {
@@ -25,10 +27,14 @@ public class GyroControl : MonoBehaviour {
         {
             gyro = Input.gyro;
             gyro.enabled = true;
+            hasGyro = true;
             return true;
         }
+        else
+        {
+            noGyro.SetActive(true);
+            return false;
+        }
 
-        noGyro.SetActive(true);
-        return false;
     }
 }
