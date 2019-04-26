@@ -246,8 +246,8 @@ GameObject:
   - component: {fileID: 2401836620347883977}
   - component: {fileID: 4354386471614511373}
   - component: {fileID: 7946606152215446072}
-  - component: {fileID: 1988830443228904879}
   - component: {fileID: 7420180121452987241}
+  - component: {fileID: 2462168773279931221}
   m_Layer: 5
   m_Name: Button_Process
   m_TagString: Untagged
@@ -353,8 +353,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1988830443228904879}
-        m_MethodName: changeScene
+      - m_Target: {fileID: 2462168773279931221}
+        m_MethodName: goToActivities
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -366,21 +366,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &1988830443228904879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4906544031761924766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83e2899c364d8644582b6bedff47f973, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textData: {fileID: 7784478014133607949}
-  gameObjectData: {fileID: 4906544031761924766}
-  _scene: 2
 --- !u!114 &7420180121452987241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,3 +381,15 @@ MonoBehaviour:
   processTitle: 
   listPosition: 0
   titleText: {fileID: 1865579819675476592}
+--- !u!114 &2462168773279931221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4906544031761924766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3adcf2a4e7672e14e96c3a3f1cef26fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

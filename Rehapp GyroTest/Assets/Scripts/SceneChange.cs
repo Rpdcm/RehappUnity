@@ -23,6 +23,7 @@ public class SceneChange : MonoBehaviour {
     private const string REGISTERSCREEN = "RegisterScreen";
     private const string CURRENTNOTIFICATIONSCREEN = "CurrentNotificationScreen";
     private const string PHISIOTERAPISTLISTSCREEN = "PhisiotherapistListScreen";
+    private const string VIDEOSCREEN = "VideoScene";
 
     [SerializeField]
     private TextMeshProUGUI textData;
@@ -47,7 +48,8 @@ public class SceneChange : MonoBehaviour {
         REGISTERSCREEN,
         CURRENTNOTIFICATIONSCREEN,
         PHISIOTERAPISTLISTSCREEN,
-        PROCESSSCREEN
+        PROCESSSCREEN,
+        VIDEOSCREEN
     }
 
     [SerializeField] private EnumChangeScene _scene;
@@ -58,6 +60,10 @@ public class SceneChange : MonoBehaviour {
         {
             case EnumChangeScene.LOGINSCREEN:
                 SceneManager.LoadScene(LOGINSCREEN);
+                break;
+
+            case EnumChangeScene.VIDEOSCREEN:
+                SceneManager.LoadScene(VIDEOSCREEN);
                 break;
 
             case EnumChangeScene.PHISIOTERAPISTLISTSCREEN:
@@ -92,6 +98,7 @@ public class SceneChange : MonoBehaviour {
                 break;
 
             case EnumChangeScene.CURRENTACTIVITYSCREEN:
+                Manager.GetInstance().temporalActivity = Manager.GetInstance().activitiesRequests[gameObjectData.GetComponent<activityInfo>().listPositionData].activities[gameObjectData.GetComponent<activityInfo>().listPositionActivity];
                 SceneManager.LoadScene(CURRENTACTIVITYSCREEN);
                 activityScreenData();
                 break;

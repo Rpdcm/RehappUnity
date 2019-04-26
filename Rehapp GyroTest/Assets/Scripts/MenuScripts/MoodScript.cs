@@ -31,7 +31,8 @@ public class MoodScript : MonoBehaviour
         SUPERHAPPY,
         HAPPY,
         SAD,
-        SUPERSAD
+        SUPERSAD,
+        STARTACTIVITIES
     }
 
     [SerializeField]
@@ -39,6 +40,33 @@ public class MoodScript : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        setFace();
+    }
+
+    public void setMood()
+    {
+        if(Manager.GetInstance().mood == "WELCOME")
+        {
+            _mood = EnumMood.WELCOME;
+        }
+        if(Manager.GetInstance().mood == "STARTACTIVITIES")
+        {
+            _mood = EnumMood.STARTACTIVITIES;
+        }
+        if (Manager.GetInstance().mood == "HAPPY")
+        {
+            _mood = EnumMood.HAPPY;
+        }
+        if (Manager.GetInstance().mood == "SUPERHAPPY")
+        {
+            _mood = EnumMood.SUPERHAPPY;
+        }
+
+        setFace();
+    }
+
+    private void setFace()
     {
         switch (_mood)
         {
@@ -63,12 +91,10 @@ public class MoodScript : MonoBehaviour
                 face.sprite = superSadFace;
                 textMP.text = sentences[4];
                 break;
+            case EnumMood.STARTACTIVITIES:
+                face.sprite = happyFace;
+                textMP.text = sentences[5];
+                break;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

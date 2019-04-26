@@ -12,13 +12,20 @@ public class ObjectGyroMovement : MonoBehaviour
     private AudioClip correct;
     [SerializeField]
     private AudioClip exerciseComplete;
+    [SerializeField]
+    private GameObject timer;
+    [SerializeField]
+    private GameObject buttonNextSet;
     private float xRotation = 0;
     private float yRotation = 0;
     private float zRotation = 0;
     private int repetitionCounter = 0;
     private bool repetitionCompleted = false;
+    private int setCounter = 0;
+    private int set = 2;
     private float timePassed = 0;
     private bool isStabilized = false;
+    public string finalResult;
     [SerializeField]
     private GameObject buttonCalibrated;
     [SerializeField]
@@ -31,9 +38,12 @@ public class ObjectGyroMovement : MonoBehaviour
     bool secondFlag = false;
     private float secondsToCalibrate = 5;
     private float progressValue = 0;
+    private int safeZoneA = 0;
+    private int safeZoneB = 0;
     private bool introductionComplete = false;
     private bool finalFlag = false;
     private bool wrongXPosition = false;
+    private bool wrongYPosition = false;
     [SerializeField]
     private GameObject endPanel;
     private bool stateOne = false;
@@ -43,11 +53,16 @@ public class ObjectGyroMovement : MonoBehaviour
     private float errorsCont = 0;
     private bool errorFlag = false;
     private bool repetitiveErrorFlag = false;
-
+    private int repetitions = 2;
+    private bool setChangeFlag = false;
     public GameObject X;
     public GameObject Y;
     public GameObject Z;
     public GameObject errorsText;
+    private int yAxis;
+    private bool yErrorFlag = false;
+    private completeActivity completeActivityScript;
+    private bool exerciseStarted = false;
 
     enum EnumExercises
     {
@@ -88,11 +103,13 @@ public class ObjectGyroMovement : MonoBehaviour
     void Start()
     {
         Input.gyro.enabled = true;
+        completeActivityScript = GetComponent<completeActivity>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         Quaternion deviceRotation = DeviceRotation.Get();
         transform.rotation = deviceRotation;
         if (Mathf.Abs(xRotation - transform.eulerAngles.x) > 1)
@@ -140,8 +157,6 @@ public class ObjectGyroMovement : MonoBehaviour
         }
 
 
-
-
         if (IntroductionComplete)
         {
             switch (_exercises)
@@ -182,36 +197,52 @@ public class ObjectGyroMovement : MonoBehaviour
 
                 case EnumExercises.SHOULDEREXERCISE:
 
-                    if (repetitionCounter < 2)
+                    if (setCounter < set)
                     {
-
-                        if (xRotation > 15 && xRotation < 300)
+                        if (repetitionCounter < repetitions)
                         {
-                            wrongXPosition = true;
+
+                            if (xRotation > 15 && xRotation < 300)
+                            {
+                                wrongXPosition = true;
+                            }
+                            else
+                            {
+                                wrongXPosition = false;
+                            }
+
+                            if (yRotation > safeZoneA || yRotation < safeZoneB)
+                            {
+                                wrongYPosition = true;
+                            }
+                            else
+                            {
+                                wrongYPosition = false;
+                            }
+
+
+                            if (zRotation >= 177 && zRotation <= 181)
+                            {
+                                firstStateCompleted();
+                            }
+
+                            if (zRotation >= 88 && zRotation <= 91)
+                            {
+                                secondStateCompleted();
+                            }
+
+                            if ((zRotation >= 0 && zRotation <= 2) || (zRotation >= 357 && zRotation <= 360))
+                            {
+                                thirdStateCompleted();
+                            }
+
+                            wrongDirectionError();
+
                         }
                         else
                         {
-                            wrongXPosition = false;
+                            nextSet();
                         }
-
-
-                        if (zRotation >= 177 && zRotation <= 181)
-                        {
-                            firstStateCompleted();
-                        }
-
-                        if (zRotation >= 88 && zRotation <= 91)
-                        {
-                            secondStateCompleted();
-                        }
-
-                        if ((zRotation >= 0 && zRotation <= 2) || (zRotation >= 357 && zRotation <= 360))
-                        {
-                            thirdStateCompleted();
-                        }
-
-                        wrongDirectionError();
-
                     }
                     else
                     {
@@ -221,6 +252,58 @@ public class ObjectGyroMovement : MonoBehaviour
                     break;
             }
         }
+
+    }
+
+    public void getYAxis()
+    {
+        yAxis = (int)yRotation;
+        if ((360 - yAxis) < 40)
+        {
+            safeZoneA = 40 - (360 - yAxis);
+        }
+        else
+        {
+            safeZoneA = yAxis + 40;
+        }
+        if ((yAxis - 40) < 0)
+        {
+            safeZoneB = (yAxis - 40) + 360;
+        }
+        else
+        {
+            safeZoneB = yAxis - 40;
+        }
+    }
+
+    private void nextSet()
+    {
+        exerciseStarted = false;
+
+        if (setCounter != (set - 1))
+        {
+            if (!setChangeFlag)
+            {
+                buttonNextSet.SetActive(true);
+                timer.SetActive(false);
+                setChangeFlag = true;
+            }
+        }
+        else
+        {
+            timer.SetActive(false);
+            setCounter++;
+        }
+    }
+
+    public void startNextSet()
+    {
+        setCounter++;
+        repetitionCounter = 0;
+        getYAxis();
+        timer.SetActive(true);
+        buttonNextSet.SetActive(false);
+        setChangeFlag = false;
     }
 
     private void startCalibration()
@@ -246,7 +329,7 @@ public class ObjectGyroMovement : MonoBehaviour
 
     private void wrongDirectionError()
     {
-        if (wrongXPosition && !errorFlag)
+        if (wrongXPosition && !errorFlag && exerciseStarted)
         {
             _audioSource.clip = exerciseComplete; //sonido temporal toca cambiarlo
             _audioSource.Play();
@@ -257,6 +340,19 @@ public class ObjectGyroMovement : MonoBehaviour
         if (!wrongXPosition && errorFlag)
         {
             errorFlag = false;
+        }
+
+        if (wrongYPosition && !yErrorFlag && exerciseStarted)
+        {
+            _audioSource.clip = exerciseComplete; //sonido temporal toca cambiarlo
+            _audioSource.Play();
+            errorsCont++;
+            yErrorFlag = true;
+        }
+
+        if (!wrongYPosition && yErrorFlag)
+        {
+            yErrorFlag = false;
         }
     }
 
@@ -275,7 +371,7 @@ public class ObjectGyroMovement : MonoBehaviour
             }
         }
 
-        if (stateTwo && stateOne && !stateThree && !repetitiveErrorFlag)
+        if (stateTwo && stateOne && !stateThree && !repetitiveErrorFlag && exerciseStarted)
         {
             errorsCont++;
             repetitiveErrorFlag = true; // Bandera para saber si está subiendo y bajando el brazo  repetidas veces
@@ -287,6 +383,8 @@ public class ObjectGyroMovement : MonoBehaviour
             _audioSource.Play();
             stateOne = true;
         }
+
+        exerciseStarted= true;
     }
 
     private void secondStateCompleted()
@@ -294,7 +392,7 @@ public class ObjectGyroMovement : MonoBehaviour
 
         repetitiveErrorFlag = false;
 
-        if (!stateTwo && stateOne)
+        if (!stateTwo && stateOne && exerciseStarted)
         {
             _audioSource.clip = correct;
             _audioSource.Play();
@@ -306,7 +404,7 @@ public class ObjectGyroMovement : MonoBehaviour
 
     private void thirdStateCompleted()
     {
-        if (!stateThree && stateTwo && stateOne)
+        if (!stateThree && stateTwo && stateOne && exerciseStarted)
         {
             _audioSource.clip = correct;
             _audioSource.Play();
@@ -321,6 +419,19 @@ public class ObjectGyroMovement : MonoBehaviour
         {
             _audioSource.clip = exerciseComplete;
             _audioSource.Play();
+            if (errorsCont < 3)
+            {
+                finalResult = "Perfect";
+            }
+            else if (errorsCont > 2 && errorsCont < 6)
+            {
+                finalResult = "Good";
+            }
+            else if (errorsCont > 5)
+            {
+                finalResult = "Bad";
+            }
+            //completeActivityScript.completeTheActivity();
             endPanel.SetActive(true);
             finalFlag = true;
         }

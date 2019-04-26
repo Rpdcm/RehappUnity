@@ -11,6 +11,8 @@ public class VideoController : MonoBehaviour
     private Sprite pauseSprite;
     [SerializeField]
     private Sprite playSprite;
+    [SerializeField]
+    private PanelVideoController panelController;
     private Image image;
     private bool paused = false;
 
@@ -23,6 +25,7 @@ public class VideoController : MonoBehaviour
 
     public void pauseAndPlay()
     {
+        panelController.time = 0;
         if (!paused)
         {
             paused = true;

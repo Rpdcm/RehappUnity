@@ -31,6 +31,8 @@ public class LoginManager : MonoBehaviour
     private GameObject inputUsername;
     [SerializeField]
     private GameObject inputPassword;
+    [SerializeField]
+    private GameObject loadingPanel;
 
     private int roleId = 1;
 
@@ -48,6 +50,8 @@ public class LoginManager : MonoBehaviour
 
     public void userLogin()
     {
+
+        loadingPanel.SetActive(true);
         StartCoroutine(Login());
     }
 
@@ -81,7 +85,7 @@ public class LoginManager : MonoBehaviour
 
         WWWForm form = new WWWForm();
         form.AddField("email", email.text.TrimEnd('\u200b'));
-        form.AddField("password", password.text.TrimEnd('\u200b'));
+        form.AddField("password", inputPassword.GetComponent<TMP_InputField>().text.TrimEnd('\u200b'));
 
 
         using (UnityWebRequest www = UnityWebRequest.Post("http://localhost:8000/api/login", form))
@@ -92,6 +96,8 @@ public class LoginManager : MonoBehaviour
             {
                 Debug.Log(www.error);
                 //if incorrectPasswordthings
+
+                loadingPanel.SetActive(false);
                 inputUsername.GetComponent<Image>().sprite = wrongUsername;
                 inputPassword.GetComponent<Image>().sprite = wrongPassword;
                 incorrectText.SetActive(true);
@@ -105,7 +111,7 @@ public class LoginManager : MonoBehaviour
                 Debug.Log(stringToken.success.token);
                 Manager.GetInstance().userToken = "Bearer " + stringToken.success.token;
                 userData.GetComponent<GetData>().getData();
-                
+
 
             }
         }

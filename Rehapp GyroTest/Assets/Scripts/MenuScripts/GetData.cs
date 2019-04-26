@@ -11,7 +11,9 @@ public class GetData : MonoBehaviour
 
     [SerializeField]
     private GameObject incorrectText;
-   
+    [SerializeField]
+    private GameObject loadingPanel;
+
 
     public void getData()
     {
@@ -53,6 +55,7 @@ public class GetData : MonoBehaviour
 
                 if (stringToken.success.role_id != "1")
                 {
+                    loadingPanel.SetActive(false);
                     incorrectText.SetActive(true);
                     incorrectText.GetComponent<TextMeshProUGUI>().text = "En este momento la aplicación solo está disponible para los pacientes";
                 }

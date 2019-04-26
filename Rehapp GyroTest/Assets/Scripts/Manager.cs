@@ -13,11 +13,13 @@ public class Manager
     public List<friendRequestSuccess> friendRequests = new List<friendRequestSuccess>();
     public List<processRequestSuccess> processRequests = new List<processRequestSuccess>();
     public List<therapistRequestSuccess> therapistRequests = new List<therapistRequestSuccess>();
+    public List<activitiesRequestSuccess> activitiesRequests = new List<activitiesRequestSuccess>();
     public therapistRequestSuccess temporalTherapist;
+    public activitiesList temporalActivity;
     public string notificationTitle;
     public string notificationName;
     public int notificationListNumber;
-
+    public string mood;
     private string userId;
     private string userAge;
     private string userEmail;

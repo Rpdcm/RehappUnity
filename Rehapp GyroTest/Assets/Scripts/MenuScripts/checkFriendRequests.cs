@@ -14,6 +14,7 @@ public class checkFriendRequests : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(System.DateTime.Now.ToString("yyyy-MM-dd"));
         StartCoroutine(getFriendRequests());
     }
 

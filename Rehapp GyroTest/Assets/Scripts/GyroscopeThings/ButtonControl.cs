@@ -10,6 +10,8 @@ public class ButtonControl : MonoBehaviour
     private GameObject guidePicture;
     [SerializeField]
     private GameObject button;
+    [SerializeField]
+    private GameObject timer;
     public GameObject axis;
     [SerializeField]
     private GameObject secondPicture;
@@ -18,6 +20,7 @@ public class ButtonControl : MonoBehaviour
 
     public void startExercise()
     {
+        
         objectGyroscope.SetActive(true);
         axis.SetActive(true);
         guidePicture.SetActive(false);
@@ -34,6 +37,8 @@ public class ButtonControl : MonoBehaviour
             axis.SetActive(false);
             gameObject.SetActive(false);
             objectGyroscope.GetComponent<ObjectGyroMovement>().IntroductionComplete = true;
+            objectGyroscope.GetComponent<ObjectGyroMovement>().getYAxis();
+            timer.SetActive(true);
         }
 
         if (!objectGyroscope.GetComponent<ObjectGyroMovement>().IsStabilized && !objectGyroscope.GetComponent<ObjectGyroMovement>().IntroductionComplete)

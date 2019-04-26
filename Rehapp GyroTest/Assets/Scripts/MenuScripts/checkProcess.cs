@@ -6,16 +6,27 @@ using System;
 
 public class checkProcess : MonoBehaviour
 {
+    private ActivitiesPanelMenu panelActivities;
+    public MoodScript mood;
+    private bool processCompleted = false;
+    public bool mainMenu = true;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(getProcess());
+        panelActivities = GetComponent<ActivitiesPanelMenu>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(processCompleted && mainMenu)
+        {
+            panelActivities.getActivitiesForMenu();
+            panelActivities.turnLoadingPanelOff();
+            processCompleted = false;
+        }
     }
 
     IEnumerator getProcess()
@@ -49,9 +60,15 @@ public class checkProcess : MonoBehaviour
                 foreach (processRequestSuccess request in stringToken.data)
                 {
                     Manager.GetInstance().processRequests.Add(request);
+                    
                 }
 
+                
             }
+
+            processCompleted = true;
         }
     }
+
+    
 }

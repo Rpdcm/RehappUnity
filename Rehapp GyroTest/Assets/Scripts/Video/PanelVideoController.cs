@@ -6,24 +6,68 @@ public class PanelVideoController : MonoBehaviour
 {
     [SerializeField]
     private GameObject panel;
+    [SerializeField]
+    private GameObject playButton;
+    [SerializeField]
+    private GameObject skipButton;
+
     private bool activePanel = false;
-    private float time = 0;
+    
+    public float time = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         panel.SetActive(false);
-        
+        playButton.SetActive(false);
+        skipButton.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        time = Time.deltaTime;
+        time = time + Time.deltaTime;
 
-        if (activePanel)
+        if(activePanel)
         {
+            if (time > 5)
+            {
+                closePanel();
+            }
             
         }
+        
     }
+
+    public void openClosePanel()
+    {
+        if (activePanel)
+        {
+            closePanel();
+        }
+        else
+        {
+            openPanel();
+        }
+        
+    }
+
+    public void closePanel()
+    {
+        time = 0;
+        activePanel = false;
+        panel.SetActive(false);
+        playButton.SetActive(false);
+        skipButton.SetActive(false);
+    }
+
+    public void openPanel()
+    {
+        time = 0;
+        activePanel = true;
+        playButton.SetActive(true);
+        panel.SetActive(true);
+        skipButton.SetActive(true);
+    }
+
 }
